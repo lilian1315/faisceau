@@ -21,6 +21,9 @@ importers:
       eslint:
         specifier: ^9.39.1
         version: 9.39.1(jiti@2.6.1)
+      jsr:
+        specifier: ^0.13.5
+        version: 0.13.5
       tsdown:
         specifier: ^0.16.6
         version: 0.16.6(synckit@0.11.11)(typescript@5.9.3)
@@ -1042,6 +1045,10 @@ packages:
   jsonc-parser@3.3.1:
     resolution: {integrity: sha512-HUgH65KyejrUFPvHFPbqOY0rsFip3Bo5wb4ngvdi1EpCYWUQDC5V+Y7mZws+DLkr4M//zQJoanu1SP+87Dv1oQ==}
 
+  jsr@0.13.5:
+    resolution: {integrity: sha512-qQP20ZcG28pYes7bCq3uuvixl1TL1EpJzwLPfoQadSyWk9j2AID66qhW8+aXpRDRFDvDkXFnONsSRhpnnQAupg==}
+    hasBin: true
+
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
 
@@ -1226,6 +1233,10 @@ packages:
   node-releases@2.0.27:
     resolution: {integrity: sha512-nmh3lCkYZ3grZvqcCH+fjmQ7X+H0OeZgP40OierEaAptX4XofMh5kwNbWh7lBduUzCcV/8kZ+NDLCwm2iorIlA==}
 
+  node-stream-zip@1.15.0:
+    resolution: {integrity: sha512-LN4fydt9TqhZhThkZIVQnF9cwjU3qmUH9h78Mx/K7d3VvfRqqwthLwJEUOEL0QPZ0XQmNN7be5Ggit5+4dq3Bw==}
+    engines: {node: '>=0.12.0'}
+
   nth-check@2.1.1:
     resolution: {integrity: sha512-lqjrjmaOoAnWfMmBPL+XNnynZh2+swxiX3WUE0s4yEHI6m+AwrK2UZOimIRl3X/4QctVqS8AiZjFqyOGrMXb/w==}
 
@@ -1386,6 +1397,10 @@ packages:
   scslre@0.3.0:
     resolution: {integrity: sha512-3A6sD0WYP7+QrjbfNA2FN3FsOaGGFoekCVgTyypy53gPxhbkCIjtO6YWgdrfM+n/8sI8JeXZOIxsHjMTNxQ4nQ==}
     engines: {node: ^14.0.0 || >=16.0.0}
+
+  semiver@1.1.0:
+    resolution: {integrity: sha512-QNI2ChmuioGC1/xjyYwyZYADILWyW6AmS1UH6gDj/SFUUUS4MBAWs/7mxnkRPc/F4iHezDP+O8t0dO8WHiEOdg==}
+    engines: {node: '>=6'}
 
   semver@7.7.3:
     resolution: {integrity: sha512-SdsKMrI9TdgjdweUSR9MweHA4EJ8YxHn8DFaDisvhVlUOe4BF1tLD7GAj0lIqWVl+dPb/rExr0Btby5loQm20Q==}
@@ -2629,6 +2644,11 @@ snapshots:
 
   jsonc-parser@3.3.1: {}
 
+  jsr@0.13.5:
+    dependencies:
+      node-stream-zip: 1.15.0
+      semiver: 1.1.0
+
   keyv@4.5.4:
     dependencies:
       json-buffer: 3.0.1
@@ -2998,6 +3018,8 @@ snapshots:
 
   node-releases@2.0.27: {}
 
+  node-stream-zip@1.15.0: {}
+
   nth-check@2.1.1:
     dependencies:
       boolbase: 1.0.0
@@ -3164,6 +3186,8 @@ snapshots:
       '@eslint-community/regexpp': 4.12.2
       refa: 0.12.1
       regexp-ast-analysis: 0.7.1
+
+  semiver@1.1.0: {}
 
   semver@7.7.3: {}
 
