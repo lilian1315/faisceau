@@ -2,6 +2,7 @@
   "name": "faisceau",
   "type": "module",
   "version": "0.0.1",
+  "description": "Class-based helpers on top of alien-signals",
   "author": "lilian1315",
   "license": "MIT",
   "exports": {
