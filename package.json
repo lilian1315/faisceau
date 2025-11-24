@@ -21,7 +21,7 @@
     "lint": "eslint",
     "lint:fix": "eslint --fix",
     "typecheck": "tsc --noEmit",
-    "release": "pnpm typecheck && pnpm lint && pnpm bumpp && pnpm publish && pnpm jsr publish"
+    "release": "pnpm typecheck && pnpm lint && pnpm build && pnpm bumpp && pnpm publish && pnpm jsr publish"
   },
   "dependencies": {
     "alien-signals": "^3.1.0"
