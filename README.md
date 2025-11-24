@@ -53,20 +53,20 @@ import { effect, effectScope, endBatch, setActiveSub, startBatch } from 'faiscea
 
 ## API
 
-### `signal<T>(initial: T): Signal<T>`
+### `signal<T>(initialValue: T): Signal<T>`
 Creates a `Signal` instance backed by alien-signals.
 
 - `get()` returns the current value and tracks.
 - `peek()` returns the current value without tracking (temporarily clears the active subscriber).
 - `set(value: T)` updates the value.
 
-### `computed<T>(fn: () => T): Computed<T>`
+### `computed<T>(getter: (previousValue?: T) => T): Computed<T>`
 Creates a `Computed` instance backed by alien-signals.
 
 - `get()` returns the derived value and tracks dependencies.
 - `peek()` reads the current value without tracking.
 
-### `isSignal(value): value is Signal<any>` / `isComputed(value): value is Computed<any>`
+### `isSignal(obj): obj is Signal<any>` / `isComputed(obj): obj is Computed<any>`
 Runtime guards that let TypeScript narrow when working with mixed values.
 
 ### `batch(fn: () => void)`

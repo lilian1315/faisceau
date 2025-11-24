@@ -54,10 +54,10 @@ class Computed<T> {
   /**
    * Create a read-only derived signal.
    *
-   * @param computeFn - Function that derives the value from dependencies.
+   * @param getter - Function that derives the value from dependencies.
    */
-  constructor(computeFn: () => T) {
-    this.computed = _computed<T>(computeFn)
+  constructor(getter: (previousValue?: T) => T) {
+    this.computed = _computed<T>(getter)
   }
 
   /**
@@ -97,10 +97,10 @@ export function isSignal<T>(obj: any): obj is Signal<T> {
 /**
  * Factory that creates a read-only `Computed` instance.
  *
- * @param computeFn - Function that derives the value from dependencies.
+ * @param getter - Function that derives the value from dependencies.
  */
-export function computed<T>(computeFn: () => T): Computed<T> {
-  return new Computed<T>(computeFn)
+export function computed<T>(getter: (previousValue?: T) => T): Computed<T> {
+  return new Computed<T>(getter)
 }
 
 /**
