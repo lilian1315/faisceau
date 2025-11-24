@@ -1,7 +1,7 @@
 {
   "name": "faisceau",
   "type": "module",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "author": "lilian1315",
   "license": "MIT",
   "exports": {
