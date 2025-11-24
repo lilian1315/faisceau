@@ -17,20 +17,31 @@ pnpm add faisceau
 ## Quick start
 
 ```ts
-import { batch, computed, signal } from 'faisceau'
+import { batch, computed, effect, signal } from 'faisceau'
 
 const count = signal(0)
 const double = computed(() => count.get() * 2)
+const status = signal<'idle' | 'dirty'>('idle')
+
+effect(() => {
+  console.log(
+    'count is',
+    count.get(),
+    'double is',
+    double.get(),
+    'status is',
+    status.peek() // peek avoids subscribing the effect to status changes
+  )
+})
 
 count.set(1)
 console.log(double.get()) // 2
 
-// Read the value without creating a subscription
-const snapshot = count.peek()
-
-// Update several signals in one go
+// Update several signals in one go without retriggering the effect for `status`
 batch(() => {
+  status.set('dirty')
   count.set(count.get() + 1)
+  status.set('idle')
 })
 ```
 
