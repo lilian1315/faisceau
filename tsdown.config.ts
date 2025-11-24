@@ -4,4 +4,5 @@ export default defineConfig({
   exports: true,
   entry: 'index.ts',
   platform: 'neutral',
+  dts: true,
 })
