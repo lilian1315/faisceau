@@ -1,0 +1,35 @@
+{
+  "name": "faisceau",
+  "type": "module",
+  "version": "0.0.0",
+  "author": "lilian1315",
+  "license": "MIT",
+  "exports": {
+    ".": "./dist/index.js",
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "files": [
+    "LICENSE",
+    "README.md",
+    "dist"
+  ],
+  "scripts": {
+    "prepublishOnly": "pnpm lint && pnpm build",
+    "build": "tsdown",
+    "lint": "eslint",
+    "lint:fix": "eslint --fix",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "alien-signals": "^3.1.0"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^6.2.0",
+    "alien-signals": "^3.1.0",
+    "eslint": "^9.39.1",
+    "tsdown": "^0.16.6",
+    "typescript": "^5.9.3"
+  }
+}
