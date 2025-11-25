@@ -1,7 +1,7 @@
 {
   "name": "faisceau",
   "type": "module",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Faisceau is a tiny opinionated wrapper around alien-signals that exposes class-based helpers for signals and computed values",
   "author": "lilian1315",
   "license": "MIT",
