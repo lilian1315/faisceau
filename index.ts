@@ -83,6 +83,8 @@ class Computed<T> {
   }
 }
 
+export type { Computed, Signal }
+
 /**
  * Factory that creates a mutable `Signal` instance.
  *
