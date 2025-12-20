@@ -72,6 +72,31 @@ Runtime guards that let TypeScript narrow when working with mixed values.
 ### `batch(fn: () => void)`
 Runs `fn` between `startBatch` and `endBatch`, letting alien-signals flush subscribers once.
 
+### `untracked<T>(fn: () => T): T`
+Temporarily clears the active subscriber while running `fn`, so reads performed
+inside the callback do not become dependencies of the currently active
+subscriber. Effects created inside the callback are not parented to the active
+subscriber.
+
+Example:
+
+```ts
+import { effect, signal, untracked } from 'faisceau'
+
+const count = signal(0)
+
+effect(() => {
+  // This effect will not be subscribed to `count` reads done inside `untracked`.
+  console.log('effect ran')
+  untracked(() => {
+    // reading here won't make the outer effect depend on `count`
+    console.log('peek-like read', count.get())
+  })
+})
+
+count.set(1) // only triggers the inner reads' effects if they were created
+```
+
 ## License
 
 [MIT](./LICENSE)

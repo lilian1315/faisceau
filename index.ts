@@ -129,9 +129,10 @@ export function batch(fn: () => void): void {
 }
 
 /**
- * Run a callback function that can access signal values and create effects
- * without marking the signals as dependencies of the active subscriber,
- * and without marking the effects as children of the active subscriber.
+ * Temporarily clears the active subscriber while running `fn`, so reads
+ * performed inside the callback do not become dependencies of the currently
+ * active subscriber. Effects created inside the callback are not parented to
+ * the active subscriber.
  *
  * @param fn Callback function to run.
  * @returns Value returned by the callback.
