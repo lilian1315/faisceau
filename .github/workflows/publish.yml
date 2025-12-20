@@ -32,4 +32,4 @@ jobs:
       - run: pnpm run lint
       - run: pnpm run build
       - run: pnpx jsr publish
-      - run: pnpm publish
+      - run: pnpm publish --no-git-checks
