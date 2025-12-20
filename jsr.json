@@ -11,8 +11,7 @@
     "include": [
       "LICENSE",
       "index.ts",
-      "README.md",
-      "package.json"
+      "README.md"
     ]
   }
 }
