@@ -4,7 +4,7 @@ Faisceau is a tiny opinionated wrapper around [`alien-signals`](https://github.c
 
 - `Signal` and `Computed` classes with `get`, `peek`, and `set` helpers.
 - Type guards (`isSignal`, `isComputed`) for narrowing.
-- A safe `peek` helper implemented via `setActiveSub` so side reads do not create subscriptions.
+- A safe `peek` and `untracked` helper implemented via `setActiveSub` so side reads do not create subscriptions.
 - A simple `batch` helper that pairs `startBatch`/`endBatch`.
 - Full re-export of the underlying alien-signals API so you do not lose low-level access.
 

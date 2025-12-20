@@ -37,10 +37,7 @@ class Signal<T> {
    * Read the current value without registering a subscription.
    */
   peek(): T {
-    const previousSub = setActiveSub(undefined)
-    const value = this.get()
-    setActiveSub(previousSub)
-    return value
+    return untracked(() => this.get())
   }
 
   /**
@@ -76,10 +73,7 @@ class Computed<T> {
    * Read the derived value without registering a subscription.
    */
   peek(): T {
-    const previousSub = setActiveSub(undefined)
-    const value = this.get()
-    setActiveSub(previousSub)
-    return value
+    return untracked(() => this.get())
   }
 }
 
