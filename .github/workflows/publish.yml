@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write # The OIDC ID token is used for authentication with JSR.
+      id-token: write # Required for OIDC
     strategy:
       matrix:
-        node-version: [20]
+        node-version: [24]
     steps:
       - uses: actions/checkout@v6
       - name: Install pnpm
@@ -26,10 +26,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: pnpm
       - run: pnpm install
-      - run: pnpm typecheck
-      - run: pnpm lint
-      - run: pnpm build
+      - run: pnpm run typecheck
+      - run: pnpm run lint
+      - run: pnpm run build
       - run: pnpx jsr publish
-      - run: pnpm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - run: pnpm publish
