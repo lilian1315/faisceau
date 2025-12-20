@@ -127,3 +127,20 @@ export function batch(fn: () => void): void {
   fn()
   endBatch()
 }
+
+/**
+ * Run a callback function that can access signal values and create effects
+ * without marking the signals as dependencies of the active subscriber,
+ * and without marking the effects as children of the active subscriber.
+ *
+ * @param fn Callback function to run.
+ * @returns Value returned by the callback.
+ */
+export function untracked<T>(fn: () => T): T {
+  const prevSub = setActiveSub(undefined)
+  try {
+    return fn()
+  } finally {
+    setActiveSub(prevSub)
+  }
+}
