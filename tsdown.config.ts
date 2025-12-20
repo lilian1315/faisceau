@@ -5,4 +5,5 @@ export default defineConfig({
   entry: 'index.ts',
   platform: 'neutral',
   dts: true,
+  unbundle: true,
 })
