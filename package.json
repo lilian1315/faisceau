@@ -5,6 +5,10 @@
   "description": "Faisceau is a tiny opinionated wrapper around alien-signals that exposes class-based helpers for signals and computed values",
   "author": "lilian1315",
   "license": "MIT",
+  "repository": {
+    "url": "git+https://github.com/lilian1315/faisceau.git",
+    "type": "git"
+  },
   "exports": {
     ".": "./dist/index.js",
     "./package.json": "./package.json"
