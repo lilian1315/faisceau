@@ -4,8 +4,7 @@
   "version": "0.1.3",
   "license": "MIT",
   "exports": {
-    ".": "./index.ts",
-    "./package.json": "./package.json"
+    ".": "./index.ts"
   },
   "publish": {
     "include": [
