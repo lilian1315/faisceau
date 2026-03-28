@@ -22,11 +22,10 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsdown",
-    "lint": "eslint",
-    "lint:fix": "eslint --fix",
-    "typecheck": "tsc --noEmit",
-    "release": "pnpm typecheck && pnpm lint && pnpm bumpp"
+    "build": "vp pack",
+    "check": "vp check",
+    "fix": "vp fix",
+    "release": "vp run check && vp run bumpp"
   },
   "dependencies": {
     "alien-signals": "^3.1.0"
@@ -35,9 +34,8 @@
     "@antfu/eslint-config": "^6.2.0",
     "alien-signals": "^3.1.0",
     "bumpp": "^10.3.1",
-    "eslint": "^9.39.1",
-    "jsr": "^0.13.5",
-    "tsdown": "^0.16.6",
-    "typescript": "^5.9.3"
-  }
+    "typescript": "^5.9.3",
+    "vite-plus": "latest"
+  },
+  "packageManager": "pnpm@10.33.0"
 }
