@@ -30,7 +30,7 @@ effect(() => {
     'double is',
     double.get(),
     'status is',
-    status.peek() // peek avoids subscribing the effect to status changes
+    status.peek(), // peek avoids subscribing the effect to status changes
   )
 })
 
@@ -54,6 +54,7 @@ import { effect, effectScope, endBatch, setActiveSub, startBatch } from 'faiscea
 ## API
 
 ### `signal<T>(initialValue: T): Signal<T>`
+
 Creates a `Signal` instance backed by alien-signals.
 
 - `get()` returns the current value and tracks.
@@ -61,18 +62,22 @@ Creates a `Signal` instance backed by alien-signals.
 - `set(value: T)` updates the value.
 
 ### `computed<T>(getter: (previousValue?: T) => T): Computed<T>`
+
 Creates a `Computed` instance backed by alien-signals.
 
 - `get()` returns the derived value and tracks dependencies.
 - `peek()` reads the current value without tracking.
 
 ### `isSignal(obj): obj is Signal<any>` / `isComputed(obj): obj is Computed<any>`
+
 Runtime guards that let TypeScript narrow when working with mixed values.
 
 ### `batch(fn: () => void)`
+
 Runs `fn` between `startBatch` and `endBatch`, letting alien-signals flush subscribers once.
 
 ### `untracked<T>(fn: () => T): T`
+
 Temporarily clears the active subscriber while running `fn`, so reads performed
 inside the callback do not become dependencies of the currently active
 subscriber. Effects created inside the callback are not parented to the active

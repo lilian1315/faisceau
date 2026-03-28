@@ -10,7 +10,13 @@
  * @module
  */
 
-import { computed as _computed, signal as _signal, endBatch, setActiveSub, startBatch } from 'alien-signals'
+import {
+  computed as _computed,
+  signal as _signal,
+  endBatch,
+  setActiveSub,
+  startBatch,
+} from 'alien-signals'
 
 export * from 'alien-signals'
 
