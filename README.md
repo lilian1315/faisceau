@@ -104,4 +104,4 @@ count.set(1) // only triggers the inner reads' effects if they were created
 
 ## License
 
-[MIT](./LICENSE)
+MIT

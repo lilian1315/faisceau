@@ -9,7 +9,6 @@
     "url": "git+https://github.com/lilian1315/faisceau.git"
   },
   "files": [
-    "LICENSE",
     "README.md",
     "dist"
   ],
