@@ -1,6 +1,6 @@
 {
   "name": "faisceau",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "Faisceau is a tiny opinionated wrapper around alien-signals that exposes class-based helpers for signals and computed values",
   "license": "MIT",
   "author": "lilian1315",
@@ -22,8 +22,8 @@
     "build": "vp pack",
     "check": "vp check",
     "test": "vp test",
-    "fix": "vp fix",
-    "release": "vp run check && vp run bumpp"
+    "fix": "vp check --fix",
+    "release": "vp run check && vp exec bumpp"
   },
   "dependencies": {
     "alien-signals": "^3.1.0"
