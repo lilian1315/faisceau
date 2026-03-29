@@ -1,5 +1,6 @@
 name: Publish Package to npmjs and jsr
 on:
+  runs-on: ubuntu-latest
   push:
     tags:
       - 'v*.*.*'
@@ -7,6 +8,7 @@ on:
 
 jobs:
   publish:
+    runs-on: ubuntu-latest
     environment: publish
     permissions:
       contents: read
