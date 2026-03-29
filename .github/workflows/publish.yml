@@ -27,7 +27,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: true
           run-install: true
-      - run: vp check
-      - run: vp build
+      - run: vp run check
+      - run: vp run build
       - run: vpx jsr publish
       - run: vpx env exec npm publish --no-git-checks
