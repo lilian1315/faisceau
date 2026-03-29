@@ -13,6 +13,8 @@
 import {
   computed as _computed,
   signal as _signal,
+  effect,
+  effectScope,
   endBatch,
   setActiveSub,
   startBatch,
@@ -20,7 +22,15 @@ import {
 
 export * from 'alien-signals'
 
-class Signal<T> {
+interface BaseSignal<T> {
+  get: () => T
+  peek: () => T
+}
+
+export type Reactive<T> = Signal<T> | Computed<T>
+export type MaybeReactive<T> = T | Signal<T> | Computed<T>
+
+class Signal<T> implements BaseSignal<T> {
   private signal: ReturnType<typeof _signal<T>>
 
   /**
@@ -56,7 +66,7 @@ class Signal<T> {
   }
 }
 
-class Computed<T> {
+class Computed<T> implements BaseSignal<T> {
   private computed: ReturnType<typeof _computed<T>>
 
   /**
@@ -97,7 +107,7 @@ export function signal<T>(initialValue: T): Signal<T> {
 /**
  * Type guard that checks whether an object is a `Signal` instance.
  */
-export function isSignal<T>(obj: any): obj is Signal<T> {
+export function isSignal<T>(obj: unknown): obj is Signal<T> {
   return obj instanceof Signal
 }
 
@@ -113,8 +123,15 @@ export function computed<T>(getter: (previousValue?: T) => T): Computed<T> {
 /**
  * Type guard that checks whether an object is a `Computed` instance.
  */
-export function isComputed<T>(obj: any): obj is Computed<T> {
+export function isComputed<T>(obj: unknown): obj is Computed<T> {
   return obj instanceof Computed
+}
+
+/**
+ * Type guard that checks whether an object is a `Signal` or a `Computed` instance.
+ */
+export function isReactive<T>(obj: unknown): obj is BaseSignal<T> {
+  return obj instanceof Signal || obj instanceof Computed
 }
 
 /**
@@ -144,4 +161,69 @@ export function untracked<T>(fn: () => T): T {
   } finally {
     setActiveSub(prevSub)
   }
+}
+
+/**
+ * Returns a promise that resolves when two values become strictly equal.
+ *
+ * The values are compared using `unwrap` and strict equality (`===`).
+ *
+ * @param a First value to compare.
+ * @param b Second value to compare.
+ *
+ * @returns A promise that resolves when both values become strictly equal.
+ *
+ * @throws {CannotBecomeEqualError} If both values are non-reactive and different,
+ * as they can never become equal.
+ */
+export function whenEqual<T>(a: MaybeReactive<T>, b: MaybeReactive<T>): Promise<void> {
+  if (a === b) {
+    return Promise.resolve()
+  } else if (!isReactive(a) && !isReactive(b)) {
+    return Promise.reject(new CannotBecomeEqualError())
+  }
+
+  return when(() => unwrap(a) === unwrap(b))
+}
+
+export class CannotBecomeEqualError extends Error {
+  constructor() {
+    super('Both values are not reactive and not equal')
+    this.name = 'CannotBecomeEqualError'
+  }
+}
+
+/**
+ * Returns a promise that resolves when the given condition becomes true.
+ *
+ * The condition run inside an effect, so it will re-evaluate
+ * whenever a reactive dependencies used inside it change.
+ *
+ * @param condition A function returning a boolean condition.
+ *
+ * @returns A promise that resolves when `condition()` returns `true`.
+ * The promise may never resolve if the condition never becomes true.
+ */
+export function when(condition: () => boolean): Promise<void> {
+  let resolve: (value: void) => void
+
+  const promise = new Promise<void>((_resolve) => {
+    resolve = _resolve
+  })
+
+  const cleanup = effectScope(() => {
+    effect(() => {
+      if (condition()) resolve()
+    })
+  })
+
+  return promise.then(cleanup)
+}
+
+/**
+ * Returns the underlying value of a `Reactive` instance,
+ * or the value itself if it is not reactive.
+ */
+export function unwrap<T>(value: T | Reactive<T>): T {
+  return isReactive(value) ? value.get() : value
 }

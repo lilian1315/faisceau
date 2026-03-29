@@ -21,6 +21,7 @@
   "scripts": {
     "build": "vp pack",
     "check": "vp check",
+    "test": "vp test",
     "fix": "vp fix",
     "release": "vp run check && vp run bumpp"
   },

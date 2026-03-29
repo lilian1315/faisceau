@@ -68,7 +68,7 @@ Creates a `Computed` instance backed by alien-signals.
 - `get()` returns the derived value and tracks dependencies.
 - `peek()` reads the current value without tracking.
 
-### `isSignal(obj): obj is Signal<any>` / `isComputed(obj): obj is Computed<any>`
+### `isSignal<T>` / `isComputed<T>(obj)` / `isReactive(obj)`
 
 Runtime guards that let TypeScript narrow when working with mixed values.
 
@@ -100,6 +100,51 @@ effect(() => {
 })
 
 count.set(1) // only triggers the inner reads' effects if they were created
+```
+
+## `unwrap<T>(value: T | Reactive<T>): T`
+
+Returns the underlying value of a reactive instance, or the value itself if it is not reactive.  
+Useful when you want to work with the raw value regardless of whether it’s reactive.
+
+## `when(condition: () => boolean): Promise<void>`
+
+Returns a promise that resolves once a reactive-aware condition becomes true.
+The condition re-evaluates whenever its reactive dependencies change.
+
+Example:
+
+```ts
+import { signal, when } from 'faisceau'
+
+const ready = signal(false)
+
+when(() => ready.get()).then(() => {
+  console.log('Ready is true!')
+})
+
+// Later
+ready.set(true)
+```
+
+## `whenEqual<T>(a: MayBeReactive<T>, b: MayBeReactive<T>): Promise<void>`
+
+Returns a promise that resolves when two values become strictly equal (===).
+Works with reactive and non-reactive values. Throws CannotBecomeEqualError if both values are non-reactive and already different.
+
+Example:
+
+```ts
+import { signal, when } from 'faisceau'
+
+const ready = signal(false)
+
+when(() => ready.get()).then(() => {
+  console.log('Ready is true!')
+})
+
+// Later
+ready.set(true)
 ```
 
 ## License
