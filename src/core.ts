@@ -134,11 +134,15 @@ export function isReactive<T>(obj: unknown): obj is BaseSignal<T> {
  * Execute a function inside a `alien-signals` batch to group updates.
  *
  * @param fn - Function whose updates should be batched.
+ * @return The value returned by the function.
  */
-export function batch(fn: () => void): void {
+export function batch<T>(fn: () => T): T {
   startBatch()
-  fn()
+  try {
+    return fn()
+  } finally {
   endBatch()
+  }
 }
 
 /**
