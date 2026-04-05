@@ -6,76 +6,54 @@ import {
   endBatch,
   setActiveSub,
   startBatch,
+  trigger,
 } from 'alien-signals'
 
-interface BaseSignal<T> {
-  get: () => T
-  peek: () => T
-}
-
-export type Reactive<T> = Signal<T> | Computed<T>
 export type MaybeReactive<T> = T | Reactive<T>
 
-export class Signal<T> implements BaseSignal<T> {
-  private signal: ReturnType<typeof _signal<T>>
+export class Reactive<T> {
+  constructor(protected source: ReturnType<typeof _signal<T>> | ReturnType<typeof _computed<T>>) {}
 
+  get(): T {
+    return this.source()
+  }
+
+  peek(): T {
+    return untracked(() => this.source())
+  }
+
+  trigger() {
+    return trigger(this.source)
+  }
+}
+
+export class Signal<T> extends Reactive<T> {
   /**
    * Create a new mutable signal.
    *
    * @param initialValue - Initial value stored in the signal.
    */
   constructor(initialValue: T) {
-    this.signal = _signal<T>(initialValue)
+    super(_signal(initialValue))
   }
-
-  /**
-   * Read the current value while subscribing the caller.
-   */
-  get(): T {
-    return this.signal()
-  }
-
-  /**
-   * Read the current value without registering a subscription.
-   */
-  peek(): T {
-    return untracked(() => this.get())
-  }
-
   /**
    * Update the stored value and notify subscribers.
    *
    * @param value - Next value to store in the signal.
    */
   set(value: T) {
-    this.signal(value)
+    this.source(value)
   }
 }
 
-export class Computed<T> implements BaseSignal<T> {
-  private computed: ReturnType<typeof _computed<T>>
-
+export class Computed<T> extends Reactive<T> {
   /**
    * Create a read-only derived signal.
    *
    * @param getter - Function that derives the value from dependencies.
    */
   constructor(getter: (previousValue?: T) => T) {
-    this.computed = _computed<T>(getter)
-  }
-
-  /**
-   * Read the derived value while subscribing the caller.
-   */
-  get(): T {
-    return this.computed()
-  }
-
-  /**
-   * Read the derived value without registering a subscription.
-   */
-  peek(): T {
-    return untracked(() => this.get())
+    super(_computed(getter))
   }
 }
 
@@ -114,8 +92,8 @@ export function isComputed<T = any>(obj: unknown): obj is Computed<T> {
 /**
  * Type guard that checks whether an object is a `Signal` or a `Computed` instance.
  */
-export function isReactive<T = any>(obj: unknown): obj is BaseSignal<T> {
-  return obj instanceof Signal || obj instanceof Computed
+export function isReactive<T = any>(obj: unknown): obj is Reactive<T> {
+  return obj instanceof Reactive
 }
 
 /**
@@ -129,7 +107,7 @@ export function batch<T>(fn: () => T): T {
   try {
     return fn()
   } finally {
-  endBatch()
+    endBatch()
   }
 }
 
