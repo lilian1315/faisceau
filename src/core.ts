@@ -91,7 +91,7 @@ export function signal<T>(initialValue: T): Signal<T> {
 /**
  * Type guard that checks whether an object is a `Signal` instance.
  */
-export function isSignal<T>(obj: unknown): obj is Signal<T> {
+export function isSignal<T = any>(obj: unknown): obj is Signal<T> {
   return obj instanceof Signal
 }
 
@@ -107,14 +107,14 @@ export function computed<T>(getter: (previousValue?: T) => T): Computed<T> {
 /**
  * Type guard that checks whether an object is a `Computed` instance.
  */
-export function isComputed<T>(obj: unknown): obj is Computed<T> {
+export function isComputed<T = any>(obj: unknown): obj is Computed<T> {
   return obj instanceof Computed
 }
 
 /**
  * Type guard that checks whether an object is a `Signal` or a `Computed` instance.
  */
-export function isReactive<T>(obj: unknown): obj is BaseSignal<T> {
+export function isReactive<T = any>(obj: unknown): obj is BaseSignal<T> {
   return obj instanceof Signal || obj instanceof Computed
 }
 
