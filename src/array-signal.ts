@@ -9,13 +9,13 @@ export class ArraySignal<T> extends Signal<Array<T>> implements Array<T> {
     return new Proxy(this, {
       get(target, prop, receiver) {
         return typeof prop === 'string' && prop.match(/^\d+$/)
-          ? target.peek()[Number(prop)]
+          ? target.get()[Number(prop)]
           : Reflect.get(target, prop, receiver)
       },
 
       set(target, prop, value, receiver) {
         return typeof prop === 'string' && prop.match(/^\d+$/)
-          ? (target.peek()[Number(prop)] = value)
+          ? (target.get()[Number(prop)] = value)
           : Reflect.set(target, prop, value, receiver)
       },
     })
