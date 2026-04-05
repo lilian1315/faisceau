@@ -6,7 +6,7 @@ export default defineConfig({
   },
   pack: {
     exports: true,
-    entry: 'index.ts',
+    entry: 'src/index.ts',
     platform: 'neutral',
     dts: true,
     unbundle: true,

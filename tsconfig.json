@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "lib": ["es2020", "DOM"],
+    "lib": ["ESNext"],
     "moduleDetection": "force",
     "module": "preserve",
     "moduleResolution": "bundler",
@@ -12,7 +12,8 @@
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "noEmit": true
   },
-  "include": ["index.ts", "index.test.ts"]
+  "include": ["src/**/*.ts", "tests/**/*.ts"]
 }

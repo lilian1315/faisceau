@@ -20,17 +20,15 @@ import {
   startBatch,
 } from 'alien-signals'
 
-export * from 'alien-signals'
-
 interface BaseSignal<T> {
   get: () => T
   peek: () => T
 }
 
 export type Reactive<T> = Signal<T> | Computed<T>
-export type MaybeReactive<T> = T | Signal<T> | Computed<T>
+export type MaybeReactive<T> = T | Reactive<T>
 
-class Signal<T> implements BaseSignal<T> {
+export class Signal<T> implements BaseSignal<T> {
   private signal: ReturnType<typeof _signal<T>>
 
   /**
@@ -66,7 +64,7 @@ class Signal<T> implements BaseSignal<T> {
   }
 }
 
-class Computed<T> implements BaseSignal<T> {
+export class Computed<T> implements BaseSignal<T> {
   private computed: ReturnType<typeof _computed<T>>
 
   /**
@@ -92,8 +90,6 @@ class Computed<T> implements BaseSignal<T> {
     return untracked(() => this.get())
   }
 }
-
-export type { Computed, Signal }
 
 /**
  * Factory that creates a mutable `Signal` instance.

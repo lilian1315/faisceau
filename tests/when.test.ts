@@ -1,5 +1,6 @@
 import { it, expect, describe, vi } from 'vite-plus/test'
-import { CannotBecomeEqualError, signal, when, whenEqual } from './index.ts'
+import { CannotBecomeEqualError, signal, when, whenEqual } from '../src/index.ts'
+import { sleep } from './utils.ts'
 
 describe('when', () => {
   it('should resolve when the condition is true', async () => {
@@ -48,7 +49,3 @@ describe('whenEqual', () => {
     expect(promise).toHaveResolved()
   })
 })
-
-async function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms))
-}
