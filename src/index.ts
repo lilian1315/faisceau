@@ -27,3 +27,5 @@ export {
   when,
   whenEqual,
 } from './core.ts'
+
+export { type ArraySignal, arraySignal, isArraySignal } from './array-signal.ts'
