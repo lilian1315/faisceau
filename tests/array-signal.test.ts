@@ -281,6 +281,17 @@ describe('ArraySignal', () => {
     expect(s[2]).toBe('c')
   })
 
+  it('should ensure that effects and computeds subscribe to the ArraySignal source when accessing by numeric index', () => {
+    const s = arraySignal(['a', 'b', 'c'])
+    const fn = vi.fn(() => s[1])
+
+    effect(fn)
+
+    expect(fn).toHaveBeenCalledTimes(1)
+    s.trigger()
+    expect(fn).toHaveBeenCalledTimes(2)
+  })
+
   it('should allow to set arbitrary value to the source array by numeric index', () => {
     const s = arraySignal(['a', 'b', 'd'])
 
@@ -423,7 +434,7 @@ describe('ArraySignal', () => {
       const fn1 = vi.fn(() => s[method])
       effect(fn1)
       expect(fn1).toHaveBeenCalledTimes(1)
-      s.push('a')
+      s.trigger()
       expect(fn1).toHaveBeenCalledTimes(1)
     },
   )
