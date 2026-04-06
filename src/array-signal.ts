@@ -86,120 +86,156 @@ export class ArraySignal<T> extends Signal<Array<T>> implements Array<T> {
     return batch(() => this.get().unshift(...args))
   }
 
-  get at() {
-    return this.get().at.bind(this.get())
+  at(...args: Parameters<Array<T>['at']>) {
+    return this.get().at(...args)
   }
 
-  get concat() {
-    return this.get().concat.bind(this.get())
+  concat(...args: Parameters<Array<T>['concat']>) {
+    return this.get().concat(...args)
   }
 
-  get entries() {
-    return this.get().entries.bind(this.get())
+  entries() {
+    return this.get().entries()
   }
 
-  get every() {
-    return this.get().every.bind(this.get())
+  every<S extends T>(
+    predicate: (value: T, index: number, array: T[]) => value is S,
+    thisArg?: any,
+  ): this is S[]
+  every(predicate: (value: T, index: number, array: T[]) => unknown, thisArg?: any): boolean
+  every(...args: Parameters<Array<T>['every']>) {
+    return this.get().every(...args)
   }
 
-  get filter() {
-    return this.get().filter.bind(this.get())
+  filter(...args: Parameters<Array<T>['filter']>) {
+    return this.get().filter(...args)
   }
 
-  get find() {
-    return this.get().find.bind(this.get())
+  find(...args: Parameters<Array<T>['find']>) {
+    return this.get().find(...args)
   }
 
-  get findIndex() {
-    return this.get().findIndex.bind(this.get())
+  findIndex(...args: Parameters<Array<T>['findIndex']>) {
+    return this.get().findIndex(...args)
   }
 
-  get findLast() {
-    return this.get().findLast.bind(this.get())
+  findLast(...args: Parameters<Array<T>['findLast']>) {
+    return this.get().findLast(...args)
   }
 
-  get findLastIndex() {
-    return this.get().findLastIndex.bind(this.get())
+  findLastIndex(...args: Parameters<Array<T>['findLastIndex']>) {
+    return this.get().findLastIndex(...args)
   }
 
-  get flat() {
-    return this.get().flat.bind(this.get())
+  flat<A, D extends number = 1>(this: A, depth?: D): FlatArray<A, D>[]
+  flat(...args: Parameters<Array<T>['flat']>) {
+    return this.get().flat(...args)
   }
 
-  get flatMap() {
-    return this.get().flatMap.bind(this.get())
+  flatMap<U, This = undefined>(
+    callback: (this: This, value: T, index: number, array: T[]) => U | ReadonlyArray<U>,
+    thisArg?: This,
+  ): U[]
+  flatMap(...args: Parameters<Array<T>['flatMap']>) {
+    return this.get().flatMap(...args)
   }
 
-  get forEach() {
-    return this.get().forEach.bind(this.get())
+  forEach(...args: Parameters<Array<T>['forEach']>) {
+    return this.get().forEach(...args)
   }
 
-  get includes() {
-    return this.get().includes.bind(this.get())
+  includes(...args: Parameters<Array<T>['includes']>) {
+    return this.get().includes(...args)
   }
 
-  get indexOf() {
-    return this.get().indexOf.bind(this.get())
+  indexOf(...args: Parameters<Array<T>['indexOf']>) {
+    return this.get().indexOf(...args)
   }
 
-  get join() {
-    return this.get().join.bind(this.get())
+  join(...args: Parameters<Array<T>['join']>) {
+    return this.get().join(...args)
   }
 
-  get keys() {
-    return this.get().keys.bind(this.get())
+  keys() {
+    return this.get().keys()
   }
 
-  get lastIndexOf() {
-    return this.get().lastIndexOf.bind(this.get())
+  lastIndexOf(...args: Parameters<Array<T>['lastIndexOf']>) {
+    return this.get().lastIndexOf(...args)
   }
 
-  get map() {
-    return this.get().map.bind(this.get())
+  map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[]
+  map(...args: Parameters<Array<T>['map']>) {
+    return this.get().map(...args)
   }
 
-  get reduce() {
-    return this.get().reduce.bind(this.get())
+  reduce(callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T): T
+  reduce(
+    callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T,
+    initialValue: T,
+  ): T
+  reduce<U>(
+    callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U,
+    initialValue: U,
+  ): U
+  reduce(callbackfn: any, initialValue?: any) {
+    return this.get().reduce(callbackfn, initialValue)
   }
 
-  get reduceRight() {
-    return this.get().reduceRight.bind(this.get())
+  reduceRight(
+    callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T,
+  ): T
+  reduceRight(
+    callbackfn: (previousValue: T, currentValue: T, currentIndex: number, array: T[]) => T,
+    initialValue: T,
+  ): T
+  reduceRight<U>(
+    callbackfn: (previousValue: U, currentValue: T, currentIndex: number, array: T[]) => U,
+    initialValue: U,
+  ): U
+  reduceRight(callbackfn: any, initialValue?: any) {
+    return this.get().reduceRight(callbackfn, initialValue)
   }
 
-  get slice() {
-    return this.get().slice.bind(this.get())
+  slice(...args: Parameters<Array<T>['slice']>) {
+    return this.get().slice(...args)
   }
 
-  get some() {
-    return this.get().some.bind(this.get())
+  some(...args: Parameters<Array<T>['some']>) {
+    return this.get().some(...args)
   }
 
-  get toReversed() {
-    return this.get().toReversed.bind(this.get())
+  toReversed() {
+    return this.get().toReversed()
   }
 
-  get toSorted() {
-    return this.get().toSorted.bind(this.get())
+  toSorted(...args: Parameters<Array<T>['toSorted']>) {
+    return this.get().toSorted(...args)
   }
 
-  get toSpliced() {
-    return this.get().toSpliced.bind(this.get())
+  toSpliced(...args: Parameters<Array<T>['toSpliced']>) {
+    return this.get().toSpliced(...args)
   }
 
-  get toLocaleString() {
-    return this.get().toLocaleString.bind(this.get())
+  toLocaleString(
+    locales: string | string[],
+    options?: Intl.NumberFormatOptions & Intl.DateTimeFormatOptions,
+  ): string
+  toLocaleString(): string
+  toLocaleString(locales?: any, options?: any) {
+    return locales ? this.get().toLocaleString(locales, options) : this.get().toLocaleString()
   }
 
-  get toString() {
-    return this.get().toString.bind(this.get())
+  toString() {
+    return this.get().toString()
   }
 
-  get values() {
-    return this.get().values.bind(this.get())
+  values() {
+    return this.get().values()
   }
 
-  get with() {
-    return this.get().with.bind(this.get())
+  with(...args: Parameters<Array<T>['with']>) {
+    return this.get().with(...args)
   }
 }
 
