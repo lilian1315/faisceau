@@ -374,4 +374,57 @@ describe('ArraySignal', () => {
     expect(fn).toHaveBeenCalledTimes(3)
     expect(s.get()).toStrictEqual(['d', 'e', 'f', 'g'])
   })
+
+  const methods: Extract<keyof Array<any>, string>[] = [
+    'at',
+    'concat',
+    'copyWithin',
+    'entries',
+    'every',
+    'fill',
+    'filter',
+    'find',
+    'findIndex',
+    'findLast',
+    'findLastIndex',
+    'flat',
+    'flatMap',
+    'forEach',
+    'includes',
+    'indexOf',
+    'join',
+    'keys',
+    'lastIndexOf',
+    'map',
+    'pop',
+    'push',
+    'reduce',
+    'reduceRight',
+    'reverse',
+    'shift',
+    'slice',
+    'some',
+    'sort',
+    'splice',
+    'toLocaleString',
+    'toReversed',
+    'toSorted',
+    'toSpliced',
+    'toString',
+    'unshift',
+    'values',
+    'with',
+  ] as const
+
+  it.each(methods.map((m) => [m]))(
+    `should not subscribe to ArraySignal source when accessing "%s" method`,
+    (method) => {
+      const s = arraySignal<string>([])
+      const fn1 = vi.fn(() => s[method])
+      effect(fn1)
+      expect(fn1).toHaveBeenCalledTimes(1)
+      s.push('a')
+      expect(fn1).toHaveBeenCalledTimes(1)
+    },
+  )
 })
