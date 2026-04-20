@@ -22,7 +22,7 @@ export class Reactive<T> {
     return untracked(() => this.source())
   }
 
-  trigger() {
+  trigger(): void {
     return trigger(this.source)
   }
 }
