@@ -28,6 +28,8 @@ export class Reactive<T> {
 }
 
 export class Signal<T> extends Reactive<T> {
+  private readonlyComputed: Computed<T> | null = null
+
   /**
    * Create a new mutable signal.
    *
@@ -43,6 +45,11 @@ export class Signal<T> extends Reactive<T> {
    */
   set(value: T) {
     this.source(value)
+  }
+
+  readonly(): Computed<T> {
+    if (!this.readonlyComputed) this.readonlyComputed = computed(() => this.get())
+    return this.readonlyComputed
   }
 }
 
