@@ -4,9 +4,9 @@
   "version": "0.3.0",
   "license": "MIT",
   "exports": {
-    ".": "./index.ts"
+    ".": "./src/index.ts"
   },
   "publish": {
-    "include": ["index.ts", "README.md"]
+    "include": ["src", "README.md"]
   }
 }
