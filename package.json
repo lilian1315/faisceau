@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "bumpp": "^10.3.1",
-    "vite-plus": "latest"
+    "vite-plus": "catalog:"
   },
   "packageManager": "pnpm@10.33.0"
 }
