@@ -26,10 +26,11 @@
     "release": "vp run check && vp exec bumpp"
   },
   "dependencies": {
-    "alien-signals": "^3.1.0"
+    "alien-signals": "^3.2.1"
   },
   "devDependencies": {
     "bumpp": "^10.3.1",
+    "reactive-framework-test-suite": "^0.1.0",
     "vite-plus": "catalog:"
   },
   "packageManager": "pnpm@10.33.0"

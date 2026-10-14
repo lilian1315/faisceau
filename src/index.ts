@@ -10,20 +10,24 @@
  * @module
  */
 
-export * from 'alien-signals'
-
 export type { Signal, Computed, Reactive, MaybeReactive } from './core.ts'
 
 export {
   isSignal,
   isComputed,
-  CannotBecomeEqualError,
-  batch,
   computed,
   isReactive,
   signal,
-  untracked,
-  unwrap,
-  when,
-  whenEqual,
+  effect,
+  effectScope,
+  startBatch,
+  endBatch,
+  setActiveSub,
+  getActiveSub,
+  getBatchDepth,
+  isEffect,
+  isEffectScope,
+  trigger,
 } from './core.ts'
+
+export { CannotBecomeEqualError, batch, untracked, unwrap, when, whenEqual } from './helpers.ts'

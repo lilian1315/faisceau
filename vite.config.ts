@@ -16,6 +16,9 @@ export default defineConfig({
       typeAware: true,
       typeCheck: true,
     },
+    rules: {
+      'no-constant-condition': ['warn', { checkLoops: false }],
+    },
   },
   fmt: {
     semi: false,

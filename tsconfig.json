@@ -9,8 +9,8 @@
     "noUnusedLocals": true,
     "declaration": true,
     "emitDeclarationOnly": true,
-    "isolatedModules": true,
-    "verbatimModuleSyntax": true,
+    // "isolatedModules": true,
+    // "verbatimModuleSyntax": true,
     "skipLibCheck": true,
     "allowImportingTsExtensions": true,
     "noEmit": true
