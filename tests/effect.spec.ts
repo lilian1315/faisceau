@@ -16,6 +16,30 @@ test('should support custom recurse effect', () => {
   expect(triggers).toBe(6)
 })
 
+test('peek does not subscribe to signals or computed values', () => {
+  const count = signal(0)
+  const doubled = computed(() => count.peek() * 2)
+  let runs = 0
+
+  effect(() => {
+    runs++
+    doubled.get()
+  })
+  expect(runs).toBe(1)
+
+  count.set(1)
+  expect(runs).toBe(1)
+
+  effect(() => {
+    runs++
+    count.peek()
+  })
+  expect(runs).toBe(2)
+
+  count.set(2)
+  expect(runs).toBe(2)
+})
+
 test('cleanup order on outer re-run: inner before outer, before new run', () => {
   const log: string[] = []
   const a = signal(0)

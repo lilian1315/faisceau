@@ -14,7 +14,16 @@ const reactiveSymbol = Symbol('faisceau reactive symbol')
  */
 export interface Reactive<T = any> {
   [reactiveSymbol]: true
+  /**
+   * Gets the current value of the reactive node.
+   * @returns The current value of the reactive node.
+   */
   get(): T
+  /**
+   * Gets the current value of the reactive node without subscribing to changes.
+   * @returns The current value of the reactive node.
+   */
+  peek(): T
 }
 
 /**
@@ -26,7 +35,12 @@ export interface Computed<T = any> extends Reactive<T> {}
  * An object that represents a `Signal` instance.
  */
 export interface Signal<T = any> extends Reactive<T> {
-  set(next: T): T
+  /**
+   * Set the value of this `Signal`
+   * @param value
+   * @returns the supplied value
+   */
+  set(value: T): T
 }
 
 /**
@@ -385,6 +399,13 @@ class ComputedNode<T = any> implements Computed<T>, ReactiveNode {
     return this.value!
   }
 
+  peek(): T {
+    const prevsub = setActiveSub()
+    const value = this.get()
+    activeSub = prevsub
+    return value
+  }
+
   update() {
     if (this.flags & HasChildEffect) {
       let link = this.depsTail
@@ -438,6 +459,13 @@ class SignalNode<T = any> implements Signal<T>, ReactiveNode {
       link(this, sub, cycle)
     }
     return this.currentValue
+  }
+
+  peek(): T {
+    const prevsub = setActiveSub()
+    const value = this.get()
+    activeSub = prevsub
+    return value
   }
 
   set(value: T): T {
