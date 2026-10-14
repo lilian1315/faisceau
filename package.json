@@ -29,7 +29,7 @@
     "alien-signals": "^3.2.1"
   },
   "devDependencies": {
-    "bumpp": "^10.3.1",
+    "bumpp": "^12.3.0",
     "reactive-framework-test-suite": "^0.1.0",
     "vite-plus": "catalog:"
   },
