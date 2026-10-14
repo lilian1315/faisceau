@@ -9,17 +9,29 @@ interface EffectNode extends ReactiveNode {
 
 const reactiveSymbol = Symbol('faisceau reactive symbol')
 
+/**
+ * An object that represents a reactive value. It can be a `Signal` or a `Computed` instance.
+ */
 export interface Reactive<T = any> {
   [reactiveSymbol]: true
   get(): T
 }
 
+/**
+ * An object that represents a `Computed` instance.
+ */
 export interface Computed<T = any> extends Reactive<T> {}
 
+/**
+ * An object that represents a `Signal` instance.
+ */
 export interface Signal<T = any> extends Reactive<T> {
   set(next: T): T
 }
 
+/**
+ * An object that represents a reactive value that can be either a `Signal`, a `Computed` instance or just a plain value.
+ */
 export type MaybeReactive<T> = T | Reactive<T>
 
 // Marks a parent (effect or scope) whose deps include at least one child
@@ -81,60 +93,110 @@ const { link, unlink, propagate, checkDirty, shallowPropagate } = createReactive
   },
 })
 
+/**
+ * @returns The active subscription node or undefined.
+ */
 export function getActiveSub(): ReactiveNode | undefined {
   return activeSub
 }
 
-export function setActiveSub(sub?: ReactiveNode) {
+/**
+ * Sets the currently active subscription node.
+ * @param sub The new active subscription node or undefined.
+ * @returns The previous active subscription node or undefined.
+ */
+export function setActiveSub(sub?: ReactiveNode): ReactiveNode | undefined {
   const prevSub = activeSub
   activeSub = sub
   return prevSub
 }
 
+/**
+ * @returns The current batch depth.
+ */
 export function getBatchDepth(): number {
   return batchDepth
 }
 
-export function startBatch() {
+/**
+ * Increments the batch depth, indicating that a batch of updates is starting.
+ */
+export function startBatch(): void {
   ++batchDepth
 }
 
-export function endBatch() {
+/**
+ * Decrements the batch depth, indicating that a batch of updates has finished.
+ */
+export function endBatch(): void {
   if (!--batchDepth) {
     flush()
   }
 }
 
+/**
+ * Type guard that checks whether an object is a `Signal` or a `Computed` instance.
+ */
 export function isReactive(value: unknown): value is Reactive {
   return value instanceof SignalNode || value instanceof ComputedNode
 }
-
+/**
+ * Type guard that checks whether an object is a `Signal` instance.
+ */
 export function isSignal(value: unknown): value is Signal {
   return value instanceof SignalNode
 }
 
+/**
+ * Type guard that checks whether an object is a `Computed` instance.
+ */
 export function isComputed(value: unknown): value is Computed {
   return value instanceof ComputedNode
 }
 
+/**
+ * Type guard that checks whether an object is an `effect` stop function.
+ */
 export function isEffect(fn: () => void): boolean {
   return fn.name === 'bound ' + effectOper.name
 }
 
+/**
+ * Type guard that checks whether an object is an `effectScope` stop function.
+ */
 export function isEffectScope(fn: () => void): boolean {
   return fn.name === 'bound ' + effectScopeOper.name
 }
 
+/**
+ * Factory that creates a mutable `Signal` instance.
+ */
 export function signal<T>(): Signal<T | undefined>
+/**
+ * Factory that creates a mutable `Signal` instance.
+ *
+ * @param initialValue - Initial value stored in the signal.
+ */
 export function signal<T>(initialValue: T): Signal<T>
 export function signal<T>(initialValue?: T) {
   return new SignalNode(initialValue)
 }
 
+/**
+ * Factory that creates a read-only `Computed` instance.
+ *
+ * @param getter - Function that derives the value from dependencies.
+ */
 export function computed<T>(getter: (previousValue?: T) => T): Computed {
   return new ComputedNode(getter)
 }
 
+/**
+ * Creates an effect that reruns whenever its dependencies change. The effect can optionally return a cleanup function that will be called before the next execution of the effect or when the effect is disposed.
+ *
+ * @param fn - The function to run.
+ * @returns A function that can be called to dispose of the effect.
+ */
 export function effect(fn: () => void | (() => void)): () => void {
   const e: EffectNode = {
     fn,
@@ -161,6 +223,12 @@ export function effect(fn: () => void | (() => void)): () => void {
   return effectOper.bind(e)
 }
 
+/**
+ * Creates an effect scope that can be used to group effects together.
+ *
+ * @param fn - The function to run.
+ * @returns A function that can be called to dispose of the effect scope.
+ */
 export function effectScope(fn: () => void): () => void {
   const e: EffectScopeNode = {
     deps: undefined,
@@ -182,6 +250,11 @@ export function effectScope(fn: () => void): () => void {
   return effectScopeOper.bind(e)
 }
 
+/**
+ * Evaluates a reactive read or callback while preserving the current batch, so any
+ * dependencies it touches are propagated as a single update cycle.
+ * @param reactive The reactive value to read or the callback to execute.
+ */
 export function trigger(reactive: Reactive | (() => void)): void {
   const sub: ReactiveNode = {
     deps: undefined,

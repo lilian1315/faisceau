@@ -18,8 +18,8 @@ jobs:
         with:
           cache: true
           run-install: true
-      - run: vp run check
-      - run: vp run test
-      - run: vp run build
+      - run: vpr check
+      - run: vpr test
+      - run: vpr build
       - run: vpx jsr publish
-      - run: vp env exec npm publish
+      - run: vp pm publish
