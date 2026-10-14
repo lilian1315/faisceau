@@ -1,5 +1,9 @@
 # Faisceau
 
+[![npm](https://img.shields.io/npm/v/faisceau)](https://npmx.dev/package/faisceau)
+[![jsr](https://jsr.io/badges/@lilian1315/faisceau)](https://jsr.io/@lilian1315/faisceau)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
 Faisceau is a tiny opinionated wrapper around [`alien-signals`](https://github.com/stackblitz/alien-signals) that exposes class-based helpers for signals and computed values. It keeps the ergonomics of alien-signals while providing:
 
 - `Signal` and `Computed` classes with `get`, `peek`, and `set` helpers.
