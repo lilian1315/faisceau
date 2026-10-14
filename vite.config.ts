@@ -24,4 +24,7 @@ export default defineConfig({
     semi: false,
     singleQuote: true,
   },
+  run: {
+    cache: true,
+  },
 })
